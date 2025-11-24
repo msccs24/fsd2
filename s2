@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html ng-app="bankApp">
+<head>
+    <title>Bank Details using ng-repeat</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-controller="bankCtrl">
+    <h2>Bank Details</h2>
+    <table border="1" cellpadding="8" cellspacing="0">
+        <tr>
+            <th>Bank Name</th>
+            <th>MICR Code</th>
+            <th>IFSC Code</th>
+            <th>Branch</th>
+            <th>Address</th>
+        </tr>
+        <tr ng-repeat="b in banks">
+            <td>{{ b.bankName }}</td>
+            <td>{{ b.micr }}</td>
+            <td>{{ b.ifsc }}</td>
+            <td>{{ b.branch }}</td>
+            <td>{{ b.address }}</td>
+        </tr>
+    </table>
+    <script>
+        var app = angular.module("bankApp", []);
+        app.controller("bankCtrl", function ($scope) {
+            $scope.banks = [
+                {
+                    bankName: "State Bank of India",
+                    micr: "400002003",
+                    ifsc: "SBIN0000456",
+                    branch: "Mumbai Main Branch",
+                    address: "Fort, Mumbai, Maharashtra"
+                },
+                {
+                    bankName: "HDFC Bank",
+                    micr: "110240001",
+                    ifsc: "HDFC0001234",
+                    branch: "Delhi Connaught Place",
+                    address: "CP, Delhi"
+                },
+                {
+                    bankName: "ICICI Bank",
+                    micr: "560229002",
+                    ifsc: "ICIC0005678",
+                    branch: "Bangalore MG Road",
+                    address: "MG Road, Bengaluru, Karnataka"
+                }
+            ];
+        });
+    </script>
+</body>
+</html>
+
+Q2
+const {readFile} = require('node:fs/promises');
+async function readMultipleFiles(fileNames) {
+    try{
+        const filePromises = fileNames.map(fileName=>readFile(fileName,'utf-8'));
+        const result = await Promise.all(filePromises);
+        result.forEach((content,idx)=>{
+            console.log(content);
+            console.log(`content of ${fileNames[idx]}`);
+        });
+    }
+    catch(error){
+        console.log('Error loading file',error);
+    }
+}
+const files = ['file1.txt','file2.txt','file3.txt'];
+readMultipleFiles(files);
