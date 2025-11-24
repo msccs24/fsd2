@@ -1,0 +1,58 @@
+Q2
+<!DOCTYPE html>
+<html ng-app="studentApp">
+<head>
+    <title>Student Details using ng-repeat</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-controller="studentCtrl">
+    <h2>Student Details</h2>
+    <table border="1" cellpadding="8" cellspacing="0">
+        <tr>
+            <th>Student Name</th>
+            <th>Student ID</th>
+            <th>Pin Code</th>
+            <th>Address</th>
+        </tr>
+        <!-- ng-repeat to loop over student list -->
+        <tr ng-repeat="stu in students">
+            <td>{{ stu.name }}</td>
+            <td>{{ stu.id }}</td>
+            <td>{{ stu.pin }}</td>
+            <td>{{ stu.address }}</td>
+        </tr>
+    </table>
+    <script>
+        var app = angular.module("studentApp", []);
+        app.controller("studentCtrl", function ($scope) {
+            // Array of student objects
+            $scope.students = [
+                {
+                    name: "Rahul Sharma",
+                    id: "STU101",
+                    pin: "400001",
+                    address: "Andheri, Mumbai"
+                },
+                {
+                    name: "Sneha Patil",
+                    id: "STU102",
+                    pin: "411002",
+                    address: "Shivaji Nagar, Pune"
+                },
+                {
+                    name: "Amit Kumar",
+                    id: "STU103",
+                    pin: "560034",
+                    address: "MG Road, Bengaluru"
+                },
+                {
+                    name: "Priya Singh",
+                    id: "STU104",
+                    pin: "110001",
+                    address: "Connaught Place, Delhi"
+                }
+            ];
+        });
+    </script>
+</body>
+</html>
