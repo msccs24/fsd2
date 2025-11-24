@@ -1,0 +1,17 @@
+const {readFile} = require('node:fs/promises');
+
+async function readMultipleFiles(fileNames) {
+    try{
+        const filePromises = fileNames.map(fileName=>readFile(fileName,'utf-8'));
+        const result = await Promise.all(filePromises);
+        result.forEach((content,idx)=>{
+            console.log(content);
+            console.log(`content of ${fileNames[idx]}`);
+        });
+    }
+    catch(error){
+        console.log('Error loading file',error);
+    }
+}
+const files = ['file1.txt','file2.txt','file3.txt'];
+readMultipleFiles(files);
