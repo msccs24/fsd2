@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html ng-app="gameApp">
+<head>
+    <title>Game List using AngularJS</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-controller="gameCtrl" ng-init="show=false">
+    <h2>Available Games</h2>
+    <p><strong ng-bind="message"></strong></p>
+    <button ng-click="show = true">
+        Show Games
+    </button>
+    <br><br>
+    <ul ng-show="show">
+        <li ng-repeat="g in games">
+            {{ g }}
+        </li>
+    </ul>
+    <script>
+        var app = angular.module("gameApp", []);
+        app.controller("gameCtrl", function ($scope) {
+            $scope.message = "Click the button to display game list";
+            $scope.games = [
+                "Cricket",
+                "Football",
+                "Hockey",
+                "Badminton",
+                "Chess",
+                "Volleyball"
+            ];
+        });
+    </script>
+</body>
+</html>
