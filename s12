@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html ng-app="empApp">
+<head>
+    <title>Employee Details using ng-repeat</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-controller="empCtrl">
+    <h2>Employee Details</h2>
+    <table border="1" cellpadding="8" cellspacing="0">
+        <tr>
+            <th>Employee Name</th>
+            <th>Employee ID</th>
+            <th>Pin Code</th>
+            <th>Address</th>
+        </tr>
+        <!-- ng-repeat to loop through employee list -->
+        <tr ng-repeat="emp in employees">
+            <td>{{ emp.name }}</td>
+            <td>{{ emp.id }}</td>
+            <td>{{ emp.pin }}</td>
+            <td>{{ emp.address }}</td>
+        </tr>
+    </table>
+    <script>
+        var app = angular.module("empApp", []);
+        app.controller("empCtrl", function ($scope) {
+            // Array of Employee objects
+            $scope.employees = [
+                {
+                    name: "Amit Sharma",
+                    id: "EMP101",
+                    pin: "400001",
+                    address: "Andheri, Mumbai"
+                },
+                {
+                    name: "Sneha Patel",
+                    id: "EMP102",
+                    pin: "411003",
+                    address: "Shivaji Nagar, Pune"
+                },
+                {
+                    name: "Rohan Verma",
+                    id: "EMP103",
+                    pin: "560037",
+                    address: "Whitefield, Bengaluru"
+                },
+                {
+                    name: "Priya Singh",
+                    id: "EMP104",
+                    pin: "110002",
+                    address: "Karol Bagh, Delhi"
+                }
+            ];
+        });
+    </script>
+</body>
+</html>
