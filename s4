@@ -52,3 +52,13 @@ app.post('/user', validateUser, (req, res) => {
   res.send("User data OK: " + JSON.stringify(req.body));
 });
 app.listen(3000, () => console.log("Server running on 3000"));
+
+
+npm init -y
+npm install express
+node app.js
+
+{
+  "name": "Sanat",
+  "age": 21
+}
