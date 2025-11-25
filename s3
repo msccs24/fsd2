@@ -32,3 +32,17 @@
     </script>
 </body>
 </html>
+
+Q2
+const http = require('http');
+const server = http.createServer((req, res) => {
+    setTimeout(() => {
+        res.writeHead(200, { 'content-type': 'text/plain' });
+        res.end('Hello this is response for node js server');
+    }, 100);
+});
+
+const port = 3000;
+server.listen(port, () => {
+    console.log(`Server Running and Listening on http://localhost:${port}`);
+});
