@@ -1,0 +1,48 @@
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+
+app.use(bodyParser.json()); // For JSON data
+app.use(bodyParser.urlencoded({ extended: true })); 
+
+let users = [];
+function validateUserData(req, res, next) {
+const { name, email, age } = req.body;
+if (!name || !email || !age) {
+return res.status(400).json({ message: "Name, email, and age are required." });
+}
+
+const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+if (!emailRegex.test(email)) {
+return res.status(400).json({ message: "Invalid email format." });
+}
+if (isNaN(age)) {
+return res.status(400).json({ message: "Age must be a number." });
+}
+next();
+}
+app.post('/users', validateUserData, (req, res) => {
+const { name, email, age } = req.body;
+const newUser = {
+id: users.length + 1, // Auto-incremented ID
+name,
+email,
+age
+};
+
+users.push(newUser);
+res.status(201).json({
+message: "User created successfully",
+user: newUser
+});
+});
+
+app.get('/users', (req, res) => {
+res.status(200).json(users);
+});
+
+app.listen(3000, () => {
+console.log('Server running on port 3000');
+});
+
+Q2
