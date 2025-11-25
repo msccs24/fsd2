@@ -1,0 +1,20 @@
+const { MongoClient, ObjectId } = require('mongodb');
+async function find_Emp_with_high_salary() {
+    const client = new MongoClient('mongodb://localhost:27017');
+    try {
+        await client.connect();
+        const db = client.db('Sample Db');
+        const collection = db.collection('Employees');
+        const employees = await collection.findOne({ salary: { $gt: 25000 } });
+        console.log('Employees with salary greater than 25000:', employees);
+
+        if (employees) {
+            const employees_Id = await collection.findOne({ _id: ObjectId(employees._id) });
+            console.log('Same employees found by Id:', employees_Id);
+        }
+    }
+    finally {
+        await client.close();
+    }
+}
+find_Emp_with_high_salary();
