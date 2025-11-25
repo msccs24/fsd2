@@ -1,50 +1,35 @@
+//save as index.js
+//to run terminal:- node index.js
+//open api tester i.e postman
+//create post api request http://localhost:3000/users
+//select body raw json
+//type:- { "id":22,"title":"Singham Again","director":"Yash Raj"}
+//hit send
+
+
 const express = require('express');
 const bodyParser = require('body-parser');
 
 const app = express();
+const PORT = 3000;
 
 app.use(bodyParser.json());
+
 let movies = [];
-app.post('/movie', (req, res) => {
-const { title, director, releaseYear, genre } = req.body;
-if (!title || !director || !releaseYear || !genre) {
-return res.status(400).json({
-success: false,
-message: 'All fields (title, director, releaseYear, genre) are required.'
-});
-}
 
-const newMovie = {
-id: movies.length + 1, 
-title,
-director,
-releaseYear,
-genre
-};
+app.post('/movies', (req, res) => {
+  const { id, title, director } = req.body;
 
-movies.push(newMovie);
-return res.status(201).json({
-success: true,
-message: 'Movie created successfully!',
-data: newMovie
-});
+  if (!id || !title || !director) {
+    return res.status(400).json({ error: 'Please provide id, title, and director' });
+  }
+
+  movies.push({ id, title, director });
+  res.status(201).json({ message: 'Movie added successfully', movie: { id, title, director } });
 });
 
-app.get('/movies', (req, res) => {
-return res.status(200).json({
-success: true,
-data: movies
-});
-});
 
-app.use((req, res) => {
-return res.status(404).json({
-success: false,
-message: 'Route not found'
-});
-});
 
-const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-console.log(`Server running at http://localhost:${PORT}`);
+  console.log(`Server running at http://localhost:${PORT}`);
 });
