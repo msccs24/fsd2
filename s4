@@ -35,30 +35,31 @@
 
 Q2
 const express = require('express');
+const { body, validationResult } = require('express-validator');
 const app = express();
+const PORT = 3000;
+app.use(express.json());
 
-// built-in middlewares
-app.use(express.json());              
-app.use(express.urlencoded({extended:true})); 
+let product = [];
+let nextId = 1;
 
-// simple validation middleware
-function validateUser(req, res, next) {
-  const { name, age } = req.body;
-  if (!name || !age) return res.status(400).send("name and age required");
-  next();  // valid → continue
-}
-// route using validation middleware
-app.post('/user', validateUser, (req, res) => {
-  res.send("User data OK: " + JSON.stringify(req.body));
+app.post('/products', (req, res) => {
+    const { name, price } = req.body;
+    if (!name || typeof price !== 'number') {
+        return res.status(400).json({
+            error: 'product Name are required'
+        });
+    }
+
+    const newProduct = { id: nextId++, name, price };
+    products.push(newProduct);
+    res.status(201).json(newProduct);
 });
-app.listen(3000, () => console.log("Server running on 3000"));
 
+app.get('/products', (req, res) => {
+    res.json(products);
+});
 
-npm init -y
-npm install express
-node app.js
-
-{
-  "name": "Sanat",
-  "age": 21
-}
+app.listen(PORT, () => {
+    console.log(`server running on http://localhost:${PORT}`);
+});
