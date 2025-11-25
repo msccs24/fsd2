@@ -1,0 +1,59 @@
+const express = require('express');
+const app = express();
+const port = 3000;
+
+app.use(express.json()); 
+app.use(express.urlencoded({ extended: true })); 
+const validateInput = (req, res, next) => {
+const { name, age } = req.body;
+if (!name || !age) {
+return res.status(400).json({
+success: false,
+message: "Name and age are required!"
+});
+}
+if (isNaN(age) || age < 18) {
+return res.status(400).json({
+success: false,
+message: "Age must be a number and at least 18!"
+});
+}
+next();
+};
+
+app.post('/create-user', validateInput, (req, res) => {
+const { name, age } = req.body;
+const user = {
+id: Math.floor(Math.random() * 1000),
+name,
+age
+};
+res.status(201).json({
+success: true,
+message: 'User created successfully',
+user
+});
+});
+
+app.get('/user/:id', (req, res) => {
+const userId = req.params.id;
+const user = {
+id: userId,
+name: "John Doe",
+age: 25
+};
+res.json({
+success: true,
+user
+});
+});
+app.use((req, res) => {
+res.status(404).json({
+success: false,
+message: "Route not found"
+});
+});
+
+app.listen(port, () => {
+console.log(`Server is running on http://localhost:${port}`);
+});
